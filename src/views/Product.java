@@ -36,6 +36,17 @@ public class Product extends javax.swing.JFrame {
         JBtnGuardar = new javax.swing.JButton();
         JBtnEditar = new javax.swing.JButton();
         JBtnEliminar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        JTxtNombre = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        JTxtDescripcion = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        JTxtPrecio = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        JCboCategoria = new javax.swing.JComboBox<>();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,7 +64,7 @@ public class Product extends javax.swing.JFrame {
                 JTxtCodigoActionPerformed(evt);
             }
         });
-        jPanel1.add(JTxtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 140, -1));
+        jPanel1.add(JTxtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 140, 30));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 140, 10));
@@ -64,6 +75,7 @@ public class Product extends javax.swing.JFrame {
         jPanel1.add(JBtnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         JTblProducto.setBackground(new java.awt.Color(111, 29, 27));
+        JTblProducto.setForeground(new java.awt.Color(255, 255, 255));
         JTblProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -82,12 +94,12 @@ public class Product extends javax.swing.JFrame {
         JBtnGuardar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnGuardar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnGuardar.setText("Guardar");
-        jPanel1.add(JBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, -1, -1));
+        jPanel1.add(JBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 510, -1, -1));
 
         JBtnEditar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnEditar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnEditar.setText("Editar");
-        jPanel1.add(JBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 180, 110, -1));
+        jPanel1.add(JBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 510, 110, -1));
 
         JBtnEliminar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnEliminar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
@@ -97,13 +109,49 @@ public class Product extends javax.swing.JFrame {
                 JBtnEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(JBtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 250, -1, -1));
+        jPanel1.add(JBtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 510, -1, -1));
+
+        jLabel2.setText("Nombre: ");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, -1, -1));
+
+        JTxtNombre.setBackground(new java.awt.Color(187, 148, 87));
+        JTxtNombre.setBorder(null);
+        jPanel1.add(JTxtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 110, 180, 30));
+
+        jLabel3.setText("Descripcion: ");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 180, -1, -1));
+
+        JTxtDescripcion.setBackground(new java.awt.Color(187, 148, 87));
+        JTxtDescripcion.setBorder(null);
+        jPanel1.add(JTxtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 180, 180, 40));
+
+        jLabel4.setText("Precio: ");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 250, -1, -1));
+
+        JTxtPrecio.setBackground(new java.awt.Color(187, 148, 87));
+        JTxtPrecio.setBorder(null);
+        jPanel1.add(JTxtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 250, 180, 30));
+
+        jLabel5.setText("Categoria: ");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 320, -1, -1));
+
+        JCboCategoria.setBackground(new java.awt.Color(187, 148, 87));
+        jPanel1.add(JCboCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 320, 180, -1));
+
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 140, 180, 10));
+
+        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 220, 180, 10));
+
+        jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 280, 180, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 999, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,11 +211,22 @@ public class Product extends javax.swing.JFrame {
     private javax.swing.JButton JBtnEditar;
     private javax.swing.JButton JBtnEliminar;
     private javax.swing.JButton JBtnGuardar;
+    private javax.swing.JComboBox<String> JCboCategoria;
     private javax.swing.JTable JTblProducto;
     private javax.swing.JTextField JTxtCodigo;
+    private javax.swing.JTextField JTxtDescripcion;
+    private javax.swing.JTextField JTxtNombre;
+    private javax.swing.JTextField JTxtPrecio;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     // End of variables declaration//GEN-END:variables
 }

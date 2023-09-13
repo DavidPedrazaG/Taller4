@@ -36,22 +36,30 @@ public class Category extends javax.swing.JFrame {
         JBtnGuardar = new javax.swing.JButton();
         JBtnEditar = new javax.swing.JButton();
         JBtnEliminar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        JTxtNombre = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 230, 167));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Serif", 0, 18)); // NOI18N
         jLabel1.setText("Registrar categorias");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
 
         JBtnBuscar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnBuscar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnBuscar.setText("Buscar");
+        jPanel1.add(JBtnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 48, -1, -1));
 
         jTextField1.setBackground(new java.awt.Color(187, 148, 87));
         jTextField1.setBorder(null);
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 53, 155, 40));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 95, 155, -1));
 
         JTblCategoria.setBackground(new java.awt.Color(111, 29, 27));
         JTblCategoria.setModel(new javax.swing.table.DefaultTableModel(
@@ -67,63 +75,32 @@ public class Category extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(JTblCategoria);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 117, 630, -1));
+
         JBtnGuardar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnGuardar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnGuardar.setText("Guardar");
+        jPanel1.add(JBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(654, 524, -1, -1));
 
         JBtnEditar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnEditar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnEditar.setText("Editar");
+        jPanel1.add(JBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(773, 524, 113, -1));
 
         JBtnEliminar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnEliminar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnEliminar.setText("Eliminar");
+        jPanel1.add(JBtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(892, 524, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(JBtnBuscar)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(JBtnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(JBtnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(JBtnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JBtnBuscar)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(JBtnGuardar)
-                        .addGap(18, 18, 18)
-                        .addComponent(JBtnEditar)
-                        .addGap(18, 18, 18)
-                        .addComponent(JBtnEliminar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel2.setText("Nombre: ");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, -1, -1));
+
+        JTxtNombre.setBackground(new java.awt.Color(187, 148, 87));
+        JTxtNombre.setBorder(null);
+        jPanel1.add(JTxtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 120, 170, 40));
+
+        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 160, 170, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,10 +157,13 @@ public class Category extends javax.swing.JFrame {
     private javax.swing.JButton JBtnEliminar;
     private javax.swing.JButton JBtnGuardar;
     private javax.swing.JTable JTblCategoria;
+    private javax.swing.JTextField JTxtNombre;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
