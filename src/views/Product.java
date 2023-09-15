@@ -63,8 +63,10 @@ public class Product extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
+        JBtnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 230, 167));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -75,9 +77,9 @@ public class Product extends javax.swing.JFrame {
 
         JTxtCodigo.setBackground(new java.awt.Color(187, 148, 87));
         JTxtCodigo.setBorder(null);
-        JTxtCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JTxtCodigoActionPerformed(evt);
+        JTxtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTxtCodigoKeyTyped(evt);
             }
         });
         jPanel1.add(JTxtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 140, 30));
@@ -171,6 +173,11 @@ public class Product extends javax.swing.JFrame {
 
         JTxtPrecio.setBackground(new java.awt.Color(187, 148, 87));
         JTxtPrecio.setBorder(null);
+        JTxtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JTxtPrecioKeyTyped(evt);
+            }
+        });
         jPanel1.add(JTxtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 250, 180, 30));
 
         jLabel5.setText("Categoria: ");
@@ -188,6 +195,16 @@ public class Product extends javax.swing.JFrame {
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 280, 180, 10));
 
+        JBtnVolver.setBackground(new java.awt.Color(153, 88, 42));
+        JBtnVolver.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        JBtnVolver.setText("Volver");
+        JBtnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnVolverActionPerformed(evt);
+            }
+        });
+        jPanel1.add(JBtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 20, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -202,11 +219,8 @@ public class Product extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void JTxtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTxtCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JTxtCodigoActionPerformed
 
     private void JBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnEliminarActionPerformed
         // TODO add your handling code here:
@@ -284,6 +298,33 @@ public class Product extends javax.swing.JFrame {
         updateTable();
     }//GEN-LAST:event_JBtnBuscarActionPerformed
 
+    private void JBtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnVolverActionPerformed
+        // TODO add your handling code here:
+        Home home = new Home();
+        home.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_JBtnVolverActionPerformed
+
+    private void JTxtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTxtPrecioKeyTyped
+        // TODO add your handling code here:
+        if(evt.getSource().equals(JTxtPrecio)){
+            Character c = evt.getKeyChar();
+            if(!Character.isDigit(c) && !c.toString().equals("")){
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_JTxtPrecioKeyTyped
+
+    private void JTxtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTxtCodigoKeyTyped
+        // TODO add your handling code here:
+        if(evt.getSource().equals(JTxtCodigo)){
+            Character c = evt.getKeyChar();
+            if(!Character.isDigit(c) && !c.toString().equals("")){
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_JTxtCodigoKeyTyped
+
     private int searchCategory(String name){
         for (int i = 0; i < categories.size(); i++) {
             if(categories.get(i)[1].toString().equals(name)){
@@ -356,6 +397,7 @@ public class Product extends javax.swing.JFrame {
     private javax.swing.JButton JBtnEditar;
     private javax.swing.JButton JBtnEliminar;
     private javax.swing.JButton JBtnGuardar;
+    private javax.swing.JButton JBtnVolver;
     private javax.swing.JComboBox<String> JCboCategoria;
     private javax.swing.JTable JTblProducto;
     private javax.swing.JTextField JTxtCodigo;

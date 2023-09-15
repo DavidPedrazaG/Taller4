@@ -57,8 +57,10 @@ public class Filter extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableFiltro = new javax.swing.JTable();
+        JBtnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 230, 167));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -101,6 +103,16 @@ public class Filter extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 500, 400));
 
+        JBtnVolver.setBackground(new java.awt.Color(153, 88, 42));
+        JBtnVolver.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        JBtnVolver.setText("Volver");
+        JBtnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnVolverActionPerformed(evt);
+            }
+        });
+        jPanel1.add(JBtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,7 +125,15 @@ public class Filter extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void JBtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnVolverActionPerformed
+        // TODO add your handling code here:
+        Home home = new Home();
+        home.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_JBtnVolverActionPerformed
 
     private void categoryActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
@@ -206,6 +226,7 @@ public class Filter extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBtnVolver;
     private javax.swing.JTable JTableFiltro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

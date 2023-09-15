@@ -52,8 +52,10 @@ public class Category extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         JTxtNombre = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
+        JBtnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 230, 167));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -74,6 +76,11 @@ public class Category extends javax.swing.JFrame {
 
         jTextField1.setBackground(new java.awt.Color(187, 148, 87));
         jTextField1.setBorder(null);
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 53, 155, 40));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
@@ -141,6 +148,16 @@ public class Category extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 160, 170, 10));
 
+        JBtnVolver.setBackground(new java.awt.Color(153, 88, 42));
+        JBtnVolver.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        JBtnVolver.setText("Volver");
+        JBtnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnVolverActionPerformed(evt);
+            }
+        });
+        jPanel1.add(JBtnVolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,6 +170,7 @@ public class Category extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnGuardarActionPerformed
@@ -218,6 +236,23 @@ public class Category extends javax.swing.JFrame {
         updateTable();
     }//GEN-LAST:event_JBtnBuscarActionPerformed
 
+    private void JBtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnVolverActionPerformed
+        // TODO add your handling code here:
+        Home home = new Home();
+        home.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_JBtnVolverActionPerformed
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // TODO add your handling code here:
+        if(evt.getSource().equals(jTextField1)){
+            Character c = evt.getKeyChar();
+            if(!Character.isDigit(c) && !c.toString().equals("")){
+                evt.consume();
+            }
+        }
+    }//GEN-LAST:event_jTextField1KeyTyped
+
     private void updateTable(){
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < model.getRowCount(); j++) {
@@ -270,6 +305,7 @@ public class Category extends javax.swing.JFrame {
     private javax.swing.JButton JBtnEditar;
     private javax.swing.JButton JBtnEliminar;
     private javax.swing.JButton JBtnGuardar;
+    private javax.swing.JButton JBtnVolver;
     private javax.swing.JTable JTblCategoria;
     private javax.swing.JTextField JTxtNombre;
     private javax.swing.JLabel jLabel1;
