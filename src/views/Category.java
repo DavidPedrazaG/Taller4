@@ -4,17 +4,30 @@
  */
 package views;
 
+import controllers.CategoryController;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Clara Elizabeth
  */
 public class Category extends javax.swing.JFrame {
 
+    private final CategoryController controller;
+    private ArrayList<Object[]> categories;
+    private DefaultTableModel model;
+    
     /**
      * Creates new form Category
      */
     public Category() {
         initComponents();
+        controller = new CategoryController();
+        model = (DefaultTableModel) JTblCategoria.getModel();
+        categories = controller.searchCategory(-1);
+        updateTable();
     }
 
     /**
@@ -52,6 +65,11 @@ public class Category extends javax.swing.JFrame {
         JBtnBuscar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnBuscar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnBuscar.setText("Buscar");
+        JBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnBuscarActionPerformed(evt);
+            }
+        });
         jPanel1.add(JBtnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 48, -1, -1));
 
         jTextField1.setBackground(new java.awt.Color(187, 148, 87));
@@ -62,17 +80,23 @@ public class Category extends javax.swing.JFrame {
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 95, 155, -1));
 
         JTblCategoria.setBackground(new java.awt.Color(111, 29, 27));
+        JTblCategoria.setForeground(new java.awt.Color(255, 255, 255));
         JTblCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre"
             }
         ));
+        JTblCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTblCategoriaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTblCategoria);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 117, 630, -1));
@@ -80,16 +104,31 @@ public class Category extends javax.swing.JFrame {
         JBtnGuardar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnGuardar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnGuardar.setText("Guardar");
+        JBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnGuardarActionPerformed(evt);
+            }
+        });
         jPanel1.add(JBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(654, 524, -1, -1));
 
         JBtnEditar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnEditar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnEditar.setText("Editar");
+        JBtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnEditarActionPerformed(evt);
+            }
+        });
         jPanel1.add(JBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(773, 524, 113, -1));
 
         JBtnEliminar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnEliminar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnEliminar.setText("Eliminar");
+        JBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnEliminarActionPerformed(evt);
+            }
+        });
         jPanel1.add(JBtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(892, 524, -1, -1));
 
         jLabel2.setText("Nombre: ");
@@ -116,6 +155,80 @@ public class Category extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void JBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnGuardarActionPerformed
+        // TODO add your handling code here:
+        if(JTxtNombre.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String nombre = JTxtNombre.getText();
+        models.Category category = new models.Category(nombre);
+        controller.insertCategory(category);
+        categories = controller.searchCategory(-1);
+        updateTable();
+    }//GEN-LAST:event_JBtnGuardarActionPerformed
+
+    private void JBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnEditarActionPerformed
+        // TODO add your handling code here:
+        if(JTxtNombre.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }if(jTextField1.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el codigo de la categoria a eliminar en la barra de busqueda", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int id = Integer.parseInt(jTextField1.getText());
+        String nombre = JTxtNombre.getText();
+        models.Category category = new models.Category(id,nombre);
+        controller.updateCategory(category);
+        categories = controller.searchCategory(-1);
+        updateTable();
+    }//GEN-LAST:event_JBtnEditarActionPerformed
+
+    private void JBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnEliminarActionPerformed
+        // TODO add your handling code here:
+        if(jTextField1.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el codigo de la categoria a eliminar en la barra de busqueda", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int id = Integer.parseInt(jTextField1.getText());
+        controller.deleteCategory(id);
+        categories = controller.searchCategory(-1);
+        updateTable();
+    }//GEN-LAST:event_JBtnEliminarActionPerformed
+
+    private void JTblCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTblCategoriaMouseClicked
+        // TODO add your handling code here:
+        int row = JTblCategoria.getSelectedRow();
+        String id = model.getValueAt(row, 0).toString();
+        String nombre = model.getValueAt(row, 1).toString();
+        JTxtNombre.setText(nombre);
+        jTextField1.setText(id);
+    }//GEN-LAST:event_JTblCategoriaMouseClicked
+
+    private void JBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnBuscarActionPerformed
+        // TODO add your handling code here:
+        int code;
+        if(jTextField1.getText().isEmpty()){
+            code = -1;
+        }else{
+            code = Integer.parseInt(jTextField1.getText());
+        }      
+        categories = controller.searchCategory(code);
+        updateTable();
+    }//GEN-LAST:event_JBtnBuscarActionPerformed
+
+    private void updateTable(){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < model.getRowCount(); j++) {
+                model.removeRow(j);
+            }
+        }
+        for (int i = 0; i < categories.size(); i++) {
+            model.addRow(categories.get(i));
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -141,6 +254,7 @@ public class Category extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Category.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

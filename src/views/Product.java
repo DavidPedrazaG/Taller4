@@ -4,17 +4,33 @@
  */
 package views;
 
+import controllers.ProductController;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Clara Elizabeth
  */
 public class Product extends javax.swing.JFrame {
 
+    private final ProductController controller;
+    private ArrayList<Object[]> categories;
+    private ArrayList<Object[]> products;
+    private DefaultTableModel model;
+    
     /**
      * Creates new form Product
      */
     public Product() {
         initComponents();
+        controller = new ProductController();
+        model = (DefaultTableModel) JTblProducto.getModel();
+        categories = controller.searchCategory(-1);
+        products = controller.searchProduct(-1);
+        updateCategories();
+        updateTable();
     }
 
     /**
@@ -72,21 +88,36 @@ public class Product extends javax.swing.JFrame {
         JBtnBuscar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnBuscar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnBuscar.setText("Buscar");
+        JBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnBuscarActionPerformed(evt);
+            }
+        });
         jPanel1.add(JBtnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         JTblProducto.setBackground(new java.awt.Color(111, 29, 27));
         JTblProducto.setForeground(new java.awt.Color(255, 255, 255));
         JTblProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nombre", "Categoria", "Precio", "Descripción"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        JTblProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTblProductoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTblProducto);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 610, -1));
@@ -94,11 +125,21 @@ public class Product extends javax.swing.JFrame {
         JBtnGuardar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnGuardar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnGuardar.setText("Guardar");
+        JBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnGuardarActionPerformed(evt);
+            }
+        });
         jPanel1.add(JBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 510, -1, -1));
 
         JBtnEditar.setBackground(new java.awt.Color(153, 88, 42));
         JBtnEditar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         JBtnEditar.setText("Editar");
+        JBtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBtnEditarActionPerformed(evt);
+            }
+        });
         jPanel1.add(JBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 510, 110, -1));
 
         JBtnEliminar.setBackground(new java.awt.Color(153, 88, 42));
@@ -169,8 +210,112 @@ public class Product extends javax.swing.JFrame {
 
     private void JBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnEliminarActionPerformed
         // TODO add your handling code here:
+        if(JTxtCodigo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el codigo del producto a eliminar en la barra de busqueda", "Error", JOptionPane.ERROR_MESSAGE);            
+            return;
+        }
+        String code = JTxtCodigo.getText();
+        controller.deleteProduct(Integer.parseInt(code));
+        products = controller.searchProduct(-1);
+        updateTable();
     }//GEN-LAST:event_JBtnEliminarActionPerformed
 
+    private void JBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnGuardarActionPerformed
+        // TODO add your handling code here:
+        if(JTxtNombre.getText().isEmpty() || JTxtPrecio.getText().isEmpty() || JTxtDescripcion.getText().isEmpty() || JCboCategoria.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "Por favor complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        String nombre = JTxtNombre.getText();
+        String descripcion = JTxtDescripcion.getText();
+        float precio = Float.parseFloat(JTxtPrecio.getText());
+        int idCategoria = searchCategory(JCboCategoria.getSelectedItem().toString());
+        models.Product product = new models.Product(idCategoria, nombre, precio, descripcion);
+        controller.insertProduct(product);
+        products = controller.searchProduct(-1);
+        updateTable();
+    }//GEN-LAST:event_JBtnGuardarActionPerformed
+
+    private void JBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnEditarActionPerformed
+        // TODO add your handling code here:
+        if(JTxtNombre.getText().isEmpty() || JTxtPrecio.getText().isEmpty() || JTxtDescripcion.getText().isEmpty() || JCboCategoria.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(null, "Por favor complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }if(JTxtCodigo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el codigo del producto a modificar en la barra de busqueda", "Error", JOptionPane.ERROR_MESSAGE);            
+            return;
+        }
+        int id = Integer.parseInt(JTxtCodigo.getText());
+        String nombre = JTxtNombre.getText();
+        String descripcion = JTxtDescripcion.getText();
+        float precio = Float.parseFloat(JTxtPrecio.getText());
+        int idCategoria = searchCategory(JCboCategoria.getSelectedItem().toString());
+        models.Product product = new models.Product(id,idCategoria, nombre, precio, descripcion);
+        controller.updateProduct(product);
+        products = controller.searchProduct(-1);
+        updateTable();
+    }//GEN-LAST:event_JBtnEditarActionPerformed
+
+    private void JTblProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTblProductoMouseClicked
+        // TODO add your handling code here:
+        int row = JTblProducto.getSelectedRow();
+        String id = model.getValueAt(row, 0).toString();
+        String nombre = model.getValueAt(row, 1).toString();
+        JCboCategoria.setSelectedItem(model.getValueAt(row, 2).toString());
+        String precio = model.getValueAt(row, 3).toString();
+        String descripcion = model.getValueAt(row, 4).toString();
+        
+        JTxtCodigo.setText(id);
+        JTxtNombre.setText(nombre);
+        JTxtPrecio.setText(precio);
+        JTxtDescripcion.setText(descripcion);
+    }//GEN-LAST:event_JTblProductoMouseClicked
+
+    private void JBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnBuscarActionPerformed
+        // TODO add your handling code here:
+        int code;
+        if(JTxtCodigo.getText().isEmpty()){
+            code = -1;
+        }else{
+            code = Integer.parseInt(JTxtCodigo.getText());
+        }      
+        products = controller.searchProduct(code);
+        updateTable();
+    }//GEN-LAST:event_JBtnBuscarActionPerformed
+
+    private int searchCategory(String name){
+        for (int i = 0; i < categories.size(); i++) {
+            if(categories.get(i)[1].toString().equals(name)){
+                return Integer.parseInt(categories.get(i)[0].toString());
+            }
+        }
+        return 0;
+    }
+    
+    private void updateTable(){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < model.getRowCount(); j++) {
+                model.removeRow(j);
+            }
+        }
+        for (int i = 0; i < products.size(); i++) {
+            model.addRow(products.get(i));
+        }
+    }
+    
+    private void updateCategories(){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < JCboCategoria.getItemCount(); j++) {
+                JCboCategoria.removeItemAt(j);
+            }
+        }
+        for (int i = 0; i < categories.size(); i++) {
+            JCboCategoria.addItem(categories.get(i)[1].toString());
+        }
+        JCboCategoria.setSelectedIndex(-1);
+    }
+    
     /**
      * @param args the command line arguments
      */

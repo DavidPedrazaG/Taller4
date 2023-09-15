@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class Supabase{
 
-    private final String url = "jdbc:postgresql://db.jhbohvnplmebldlswbwd.supabase.co:5432/postgres?user=postgres&password=JoDa2302@eam.com";
+    private final String url = "jdbc:postgresql://db.oywkvwarywjjjzbtjnmc.supabase.co:5432/postgres?user=postgres&password=D@vidP!pe3110";
 
     /**
      * Connect to the PostgreSQL database
