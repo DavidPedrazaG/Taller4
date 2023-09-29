@@ -15,28 +15,27 @@ import java.sql.SQLException;
 public class Supabase{
 
     private final String url = "jdbc:postgresql://db.oywkvwarywjjjzbtjnmc.supabase.co:5432/postgres?user=postgres&password=D@vidP!pe3110";
+    private static Supabase INSTANCE;
+    private Connection connection;
 
-    /**
-     * Connect to the PostgreSQL database
-     *
-     * @return a Connection object
-     */
-    public Connection connect() {
-        Connection conn = null;
+    private Supabase() {
         try {
-            conn = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(url);
+            System.out.println("Holli");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
-
-        return conn;
     }
+    
+    public static Supabase getINSTANCE() {
+        if(INSTANCE == null){
+            INSTANCE = new Supabase();
+        }
+        return INSTANCE;
+    }       
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Supabase app = new Supabase();
-        app.connect();
+    public Connection getConnection() {
+        return connection;
     }
+    
 }

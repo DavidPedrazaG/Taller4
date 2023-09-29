@@ -5,6 +5,7 @@
 package services;
 
 import conecction.Supabase;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,33 +20,31 @@ import models.Product;
  * @author david
  */
 public class ProductServices {
-    private static final ProductServices INSTANCE = new ProductServices();
-    private Statement stmt = getStatement();
-    private ResultSet rs = null;
+    private static ProductServices INSTANCE;
+    private Statement stmt;
+    private ResultSet rs;
     private PreparedStatement ps;
+    private Connection connection;
 
-    private ProductServices() {
+    private ProductServices() {        
+        connection = Supabase.getINSTANCE().getConnection();
+        stmt = getStatement();
+        rs = null;
     }
 
     public static ProductServices getINSTANCE() {
+        if(INSTANCE == null){
+            INSTANCE = new ProductServices();
+        }
         return INSTANCE;
     }    
     
     private Statement getStatement(){
         try {
-            return new Supabase().connect().createStatement();
+            return connection.createStatement();
         } catch (SQLException ex) {
             return null;
         }
-    }
-    
-    private PreparedStatement getPreparedStatement(String sql){
-        try {
-            return new Supabase().connect().prepareStatement(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductServices.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
     
     public ResultSet searchProduct(int code){
@@ -65,7 +64,7 @@ public class ProductServices {
     public void createProduct(Product product){
         try {
             String sql = "INSERT INTO productos (id_categoria, nombre_producto, precio, descripcion) VALUES(?,?,?,?)";
-            ps = getPreparedStatement(sql);
+            ps = connection.prepareStatement(sql);
 
             ps.setInt(1, product.getIdCategoria());
             ps.setString(2, product.getNombre());
@@ -82,7 +81,7 @@ public class ProductServices {
     public void updateProduct(Product product){
         try {
             String sql = "update productos set id_categoria=?, nombre_producto=?, precio=?, descripcion=? where id=?";
-            ps = getPreparedStatement(sql);
+            ps = connection.prepareStatement(sql);
 
             ps.setInt(1, product.getIdCategoria());
             ps.setString(2, product.getNombre());
@@ -99,7 +98,7 @@ public class ProductServices {
     public void deleteProduct(int code){
         try {
             String sql = "delete from productos where id=?";
-            ps = getPreparedStatement(sql);
+            ps = connection.prepareStatement(sql);
 
             ps.setInt(1, code);
             ps.executeUpdate();

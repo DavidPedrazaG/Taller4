@@ -5,6 +5,7 @@
 package services;
 
 import conecction.Supabase;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,34 +21,31 @@ import models.Category;
  */
 public class CategoryServices {
     
-    private static final CategoryServices INSTANCE = new CategoryServices();
-    public static final String WHERECODE = "WHERE id = ";
-    private Statement stmt = getStatement();
-    private ResultSet rs = null;
+    private static CategoryServices INSTANCE;
+    private Statement stmt;
+    private ResultSet rs;
     private PreparedStatement ps;
+    private Connection connection;
     
-    private CategoryServices() {
+    private CategoryServices() {        
+        connection = Supabase.getINSTANCE().getConnection();
+        stmt = getStatement();
+        rs = null;
     }
 
     public static CategoryServices getINSTANCE() {
+        if(INSTANCE == null){
+            INSTANCE = new CategoryServices();
+        }
         return INSTANCE;
     }    
     
     private Statement getStatement(){
         try {
-            return new Supabase().connect().createStatement();
+            return connection.createStatement();
         } catch (SQLException ex) {
             return null;
         }
-    }
-    
-    private PreparedStatement getPreparedStatement(String sql){
-        try {
-            return new Supabase().connect().prepareStatement(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductServices.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
     
     public ResultSet searchCategory(int code){
@@ -67,7 +65,7 @@ public class CategoryServices {
     public void createProduct(Category category){
         try {
             String sql = "INSERT INTO categorias (nombre_categoria) VALUES(?)";
-            ps = getPreparedStatement(sql);
+            ps = connection.prepareStatement(sql);
 
             ps.setString(1, category.getNombre());
 
@@ -81,7 +79,7 @@ public class CategoryServices {
     public void updateCategory(Category category){
         try {
             String sql = "update categorias set nombre_categoria = ? where id = ?";
-            ps = getPreparedStatement(sql);
+            ps = connection.prepareStatement(sql);
             
             ps.setString(1, category.getNombre());
             ps.setInt(2, category.getId());
@@ -95,7 +93,7 @@ public class CategoryServices {
     public void deleteCategory(int code){
         try {
             String sql = "delete from categorias where id=?";
-            ps = getPreparedStatement(sql);
+            ps = connection.prepareStatement(sql);
 
             ps.setInt(1, code);
             ps.executeUpdate();
